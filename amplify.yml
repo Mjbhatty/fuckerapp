@@ -1,18 +1,24 @@
 version: 1
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "Prebuild Phase"
+        - git clone git@github.com:Mjbhatty/flutter-app.git flutter-app  # Adjust repository URL and directory name
+
     build:
       commands:
-        - cd $CODEBUILD_SRC_DIR/flutter-app  # Adjust path as per your repository structure
+        - cd flutter-app  # Adjust directory name if needed
         - flutter pub get
         - flutter clean
         - flutter build web --release
 
   artifacts:
-    baseDirectory: $CODEBUILD_SRC_DIR/flutter-app/build/web
+    baseDirectory: flutter-app/build/web
     files:
       - '**/*'
 
   cache:
     paths:
       - /root/.pub-cache
+
